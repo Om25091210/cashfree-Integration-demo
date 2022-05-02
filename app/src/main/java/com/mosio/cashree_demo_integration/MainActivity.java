@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 bhim.release();
                 paytm.release();
                 mobikwik.release();
-                google_pay.release();
+                new Handler(Looper.myLooper()).postDelayed(() -> google_pay.release(),1000);
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 bhim.release();
                 paytm.release();
                 mobikwik.release();
-                amazon_pay.release();
+                new Handler(Looper.myLooper()).postDelayed(() -> amazon_pay.release(),1000);
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 bhim.release();
                 paytm.release();
                 mobikwik.release();
-                phone_pay.release();
+                new Handler(Looper.myLooper()).postDelayed(() -> phone_pay.release(),1000);
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
@@ -151,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 phone_pay.release();
                 paytm.release();
                 mobikwik.release();
-                bhim.release();
+                new Handler(Looper.myLooper()).postDelayed(() -> bhim.release(),1000);
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
@@ -170,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 phone_pay.release();
                 bhim.release();
                 mobikwik.release();
-                paytm.release();
+                new Handler(Looper.myLooper()).postDelayed(() -> paytm.release(),1000);
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
@@ -189,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 phone_pay.release();
                 bhim.release();
                 paytm.release();
-                mobikwik.release();
+                new Handler(Looper.myLooper()).postDelayed(() -> mobikwik.release(),1000);
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
