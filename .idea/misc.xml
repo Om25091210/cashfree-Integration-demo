@@ -4,7 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/pc/.gradle/caches/transforms-3/a108b329a69785e34e00743d88a2cfb7/transformed/ui-1.0.0/res/layout/cf_item_payment_mode_paylater.xml" value="0.1" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/drawable/bg_card.xml" value="0.17" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/drawable/ic_amazon_upi.xml" value="0.17" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/drawable/ic_back.xml" value="0.17" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/drawable/ic_bhim_upi.xml" value="0.17" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/drawable/ic_card_collect.xml" value="0.17" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/drawable/ic_google_upi.xml" value="0.17" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/drawable/ic_mobikwik_upi.xml" value="0.17" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/drawable/ic_paytm.xml" value="0.17" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/drawable/ic_phonepe_upi.xml" value="0.17" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/layout/layout_dialog.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Cashree_demo_integration/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.17" />
       </map>
     </option>

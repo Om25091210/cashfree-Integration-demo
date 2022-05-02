@@ -9,6 +9,7 @@ import static com.cashfree.pg.CFPaymentService.PARAM_ORDER_CURRENCY;
 import static com.cashfree.pg.CFPaymentService.PARAM_ORDER_ID;
 import static com.cashfree.pg.CFPaymentService.PARAM_ORDER_NOTE;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -32,6 +33,7 @@ import com.android.volley.toolbox.Volley;
 import com.cashfree.pg.CFPaymentService;
 import com.cashfree.pg.core.api.upi.CFUPI;
 import com.cashfree.pg.core.api.upi.CFUPIPayment;
+import com.furkanakdemir.surroundcardview.SurroundCardView;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
@@ -54,8 +56,12 @@ import com.cashfree.pg.ui.api.CFPaymentComponent;
 public class MainActivity extends AppCompatActivity {
 
     Button btn_make_payment;
-    EditText phone,email,amount;
+    String phone,email,amount;
+    //changes
+    SurroundCardView google_pay,amazon_pay,phone_pay,bhim,paytm,mobikwik;
+    String package_name;
     long oId;
+    Dialog dialog;
     CFSession.Environment cfEnvironment = CFSession.Environment.PRODUCTION;
 
     @Override
@@ -63,25 +69,137 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        phone=findViewById(R.id.editTextTextPersonName);
-        email=findViewById(R.id.editTextTextPersonName2);
-        amount=findViewById(R.id.editTextNumber);
+        phone="9301982112";
+        email="omyadav04352@gmail.com";
+        amount="1";
 
-        btn_make_payment=findViewById(R.id.make_payment);
-        btn_make_payment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //initiatepayment();
-                httpCall_collect();
+        findViewById(R.id.collect).setOnClickListener(v->{
+            httpCall_collect();
+        });
+
+        google_pay=findViewById(R.id.google_pay);
+        amazon_pay=findViewById(R.id.amazon_pay);
+        phone_pay=findViewById(R.id.phone_pay);
+        bhim=findViewById(R.id.bhim);
+        paytm=findViewById(R.id.paytm);
+        mobikwik=findViewById(R.id.mobikwik);
+
+        google_pay.setOnClickListener(v->{
+            if(!google_pay.isCardSurrounded()) {
+                package_name="com.google.android.apps.nbu.paisa.user";
+                google_pay.setSurroundStrokeWidth(R.dimen.width_card);
+                google_pay.surround();
+                amazon_pay.release();
+                phone_pay.release();
+                bhim.release();
+                paytm.release();
+                mobikwik.release();
+                if(checkApplication(package_name))
+                    httpCall_intent(package_name);
+                else{
+                    Toast.makeText(this, "App not installed", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-        findViewById(R.id.make_payment_upi).setOnClickListener(v->{
-            httpCall_intent();
+
+        amazon_pay.setOnClickListener(v->{
+            if(!amazon_pay.isCardSurrounded()) {
+                package_name="in.amazon.mShop.android.shopping";
+                amazon_pay.setSurroundStrokeWidth(R.dimen.width_card);
+                amazon_pay.surround();
+                google_pay.release();
+                phone_pay.release();
+                bhim.release();
+                paytm.release();
+                mobikwik.release();
+                if(checkApplication(package_name))
+                    httpCall_intent(package_name);
+                else{
+                    Toast.makeText(this, "App not installed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        phone_pay.setOnClickListener(v->{
+            if(!phone_pay.isCardSurrounded()) {
+                package_name="com.phonepe.app";
+                phone_pay.setSurroundStrokeWidth(R.dimen.width_card);
+                phone_pay.surround();
+                google_pay.release();
+                amazon_pay.release();
+                bhim.release();
+                paytm.release();
+                mobikwik.release();
+                if(checkApplication(package_name))
+                    httpCall_intent(package_name);
+                else{
+                    Toast.makeText(this, "App not installed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        bhim.setOnClickListener(v->{
+            if(!bhim.isCardSurrounded()) {
+                package_name="in.org.npci.upiapp";
+                bhim.setSurroundStrokeWidth(R.dimen.width_card);
+                bhim.surround();
+                google_pay.release();
+                amazon_pay.release();
+                phone_pay.release();
+                paytm.release();
+                mobikwik.release();
+                if(checkApplication(package_name))
+                    httpCall_intent(package_name);
+                else{
+                    Toast.makeText(this, "App not installed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        paytm.setOnClickListener(v->{
+            if(!paytm.isCardSurrounded()) {
+                package_name="net.one97.paytm";
+                paytm.setSurroundStrokeWidth(R.dimen.width_card);
+                paytm.surround();
+                google_pay.release();
+                amazon_pay.release();
+                phone_pay.release();
+                bhim.release();
+                mobikwik.release();
+                if(checkApplication(package_name))
+                    httpCall_intent(package_name);
+                else{
+                    Toast.makeText(this, "App not installed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mobikwik.setOnClickListener(v->{
+            if(!mobikwik.isCardSurrounded()) {
+                package_name="com.mobikwik_new";
+                mobikwik.setSurroundStrokeWidth(R.dimen.width_card);
+                mobikwik.surround();
+                google_pay.release();
+                amazon_pay.release();
+                phone_pay.release();
+                bhim.release();
+                paytm.release();
+                if(checkApplication(package_name))
+                    httpCall_intent(package_name);
+                else{
+                    Toast.makeText(this, "App not installed", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
 
     }
 
     private void httpCall_collect() {
+        dialog = new Dialog(MainActivity.this);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.layout_dialog);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
         oId=System.currentTimeMillis();
         StringBuilder input1 = new StringBuilder();
         input1.append(oId);
@@ -90,12 +208,12 @@ public class MainActivity extends AppCompatActivity {
         JSONObject jsonBody = new JSONObject();
       try
       {
-          jsonBody.put("order_amount", amount.getText().toString());
+          jsonBody.put("order_amount", amount);
           jsonBody.put("customer_id", input1+"");
           jsonBody.put("order_id", oId+"");
           jsonBody.put("order_note", "Subscription");
-          jsonBody.put("customer_email", email.getText().toString());
-          jsonBody.put("customer_phone", phone.getText().toString());
+          jsonBody.put("customer_email", email);
+          jsonBody.put("customer_phone", phone);
           Log.d("body", "httpCall_collect: "+jsonBody);
       }
       catch (Exception e)
@@ -111,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         // enjoy your response
+                        dialog.dismiss();
                         String token=response.optJSONObject("response").optString("order_token");
 
                         Log.e("response", response.optJSONObject("response").optString("order_token"));
@@ -191,7 +310,12 @@ public class MainActivity extends AppCompatActivity {
         Log.d("string", stringRequest.toString());
         requestQueue.add(stringRequest);
     }
-    public void httpCall_intent() {
+    public void httpCall_intent(String package_name) {
+        dialog = new Dialog(MainActivity.this);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.layout_dialog);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
         oId=System.currentTimeMillis();
         StringBuilder input1 = new StringBuilder();
 
@@ -223,12 +347,12 @@ public class MainActivity extends AppCompatActivity {
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        dialog.dismiss();
                         // enjoy your response
                         String token=response.optJSONObject("response").optString("order_token");
 
                         Log.e("response", response.optJSONObject("response").optString("order_token"));
                         Log.e("response", response.toString());
-                        checkApplication("net.one97.paytm");
                         try {
                             CFSession cfSession = new CFSession.CFSessionBuilder()
                                     .setEnvironment(cfEnvironment)
@@ -237,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
                                     .build();
                             CFUPI cfupi = new CFUPI.CFUPIBuilder()
                                     .setMode(CFUPI.Mode.INTENT)
-                                    .setUPIID("com.google.android.apps.nbu.paisa.user") //Google Pay's package name = "com.google.android.apps.nbu.paisa.user"
+                                    .setUPIID(package_name) //Google Pay's package name = "com.google.android.apps.nbu.paisa.user"
                                     .build();
                             CFUPIPayment cfupiPayment = new CFUPIPayment.CFUPIPaymentBuilder()
                                     .setSession(cfSession)
@@ -288,7 +412,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("string", stringRequest.toString());
         requestQueue.add(stringRequest);
     }
-    public void checkApplication(String packageName) {
+    public boolean checkApplication(String packageName) {
         PackageManager packageManager = getPackageManager();
         ApplicationInfo applicationInfo = null;
         try {
@@ -298,9 +422,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if (applicationInfo == null) {
             // not installed
-            Log.e("Not installed","NOT");
+            return false;
         } else {
-            Log.e("installed","Yes");
+            return true;
             // Installed
         }
     }
