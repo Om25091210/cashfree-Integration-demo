@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 bhim.release();
                 paytm.release();
                 mobikwik.release();
+                google_pay.release();
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 bhim.release();
                 paytm.release();
                 mobikwik.release();
+                amazon_pay.release();
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
@@ -130,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 bhim.release();
                 paytm.release();
                 mobikwik.release();
+                phone_pay.release();
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
@@ -148,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 phone_pay.release();
                 paytm.release();
                 mobikwik.release();
+                bhim.release();
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
@@ -166,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 phone_pay.release();
                 bhim.release();
                 mobikwik.release();
+                paytm.release();
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
@@ -184,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 phone_pay.release();
                 bhim.release();
                 paytm.release();
+                mobikwik.release();
                 if(checkApplication(package_name))
                     httpCall_intent(package_name);
                 else{
