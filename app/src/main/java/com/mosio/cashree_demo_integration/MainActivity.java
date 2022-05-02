@@ -13,6 +13,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -38,11 +40,14 @@ import com.cashfree.pg.core.api.upi.CFUPIPayment;
 import com.furkanakdemir.surroundcardview.SurroundCardView;
 import com.google.gson.JsonObject;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 
@@ -54,6 +59,8 @@ import com.cashfree.pg.core.api.exception.CFException;
 import com.cashfree.pg.core.api.utils.CFErrorResponse;
 import com.cashfree.pg.ui.api.CFDropCheckoutPayment;
 import com.cashfree.pg.ui.api.CFPaymentComponent;
+
+import kotlin.jvm.internal.Intrinsics;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -356,6 +363,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         dialog.dismiss();
+                        if(!isAppUpiReady(package_name)){
+                            Toast.makeText(MainActivity.this, "App not ready please add bank details", Toast.LENGTH_SHORT).show();
+                        }
                         // enjoy your response
                         String token=response.optJSONObject("response").optString("order_token");
 
@@ -435,5 +445,24 @@ public class MainActivity extends AppCompatActivity {
             return true;
             // Installed
         }
+    }
+    public final boolean isAppUpiReady(@NotNull String packageName) {
+        Intrinsics.checkNotNullParameter(packageName, "packageName");
+        boolean appUpiReady = false;
+        Intent upiIntent = new Intent("android.intent.action.VIEW", Uri.parse("upi://pay"));
+        PackageManager pm = this.getPackageManager();
+        List var10000 = pm.queryIntentActivities(upiIntent, 0);
+        Intrinsics.checkNotNullExpressionValue(var10000, "pm.queryIntentActivities(upiIntent, 0)");
+        List upiActivities = var10000;
+        Iterator var7 = upiActivities.iterator();
+
+        while(var7.hasNext()) {
+            ResolveInfo a = (ResolveInfo)var7.next();
+            if (Intrinsics.areEqual(a.activityInfo.packageName, packageName)) {
+                appUpiReady = true;
+            }
+        }
+
+        return appUpiReady;
     }
 }
